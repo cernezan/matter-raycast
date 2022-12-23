@@ -17,8 +17,7 @@ async function getQueue() {
 
     try {
         const response = await fetch(url, options)
-        const json: any = await response.json()
-        console.log(json.feed[0].content.url)
+        return await response.json()
     } catch (error) {
         console.log(error)
     }
