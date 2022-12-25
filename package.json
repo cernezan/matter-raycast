@@ -2,8 +2,8 @@
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "matter",
   "title": "Matter",
-  "description": "View your saved for latter articles.",
-  "icon": "command-icon.png",
+  "description": "View your saved for latter articles in your Matter account.",
+  "icon": "logo.png",
   "author": "zan",
   "categories": [
     "Media",

@@ -1,4 +1,4 @@
-import { ActionPanel, Detail, List, openCommandPreferences, getPreferenceValues, Action, showToast, Toast, popToRoot } from "@raycast/api";
+import { ActionPanel, Detail, List, openCommandPreferences, getPreferenceValues, Action, showToast, Toast, popToRoot, Image } from "@raycast/api";
 import { useEffect, useState } from "react";
 import { Actions } from "./Actions";
 import { getQueue } from "./matterApi";
@@ -35,28 +35,21 @@ export default function Command() {
     fetchQueue()
   }, [])
 
-
   return (
     <>
       <List isLoading={loading}>
         {state.items?.feed.map((item: any) => (
           <List.Item
             key={item.id}
-            icon={item.content.photo_thumbnail_url}
+            icon={{ source: item.content.photo_thumbnail_url ? item.content.photo_thumbnail_url : '', mask: Image.Mask.Circle }}
             title={item.content.title}
             actions={<Actions item={item} />}
             accessories={[{
               text: item.content.article?.word_count ? item.content.article?.word_count.toString() + ' words' : ''
             }]}
           />
-
         ))}
-
       </List>
-
-
     </>
-
-
   );
 }
