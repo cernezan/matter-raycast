@@ -2,23 +2,21 @@ import { ActionPanel, Action, Icon, Toast, showToast } from "@raycast/api";
 import { useState } from "react";
 import { setFavorite } from "./matterApi";
 
-
 export function Actions(props: any) {
-
-  const[isFavorited, setIsFavorited] = useState<boolean>(props.item.content.library.is_favorited)
+  const [isFavorited, setIsFavorited] = useState<boolean>(props.item.content.library.is_favorited);
 
   async function favorite(isFavorited: boolean) {
     try {
-      let res: any = await setFavorite(props.item.content.id, true)
-      setIsFavorited(isFavorited)
+      const res: any = await setFavorite(props.item.content.id, true);
+      setIsFavorited(isFavorited);
 
-      if(res.id && isFavorited) {
-        showToast(Toast.Style.Success, "Success", "Article favorited")
+      if (res.id && isFavorited) {
+        showToast(Toast.Style.Success, "Success", "Article favorited");
       } else {
-        showToast(Toast.Style.Success, "Success", "Artice removed from favorites")
+        showToast(Toast.Style.Success, "Success", "Artice removed from favorites");
       }
     } catch (error) {
-      showToast(Toast.Style.Failure, "Error", "Something went wrong")
+      showToast(Toast.Style.Failure, "Error", "Something went wrong");
     }
   }
 
@@ -38,22 +36,23 @@ export function Actions(props: any) {
         {/* FAVORITE ARTICLE */}
         {props.item.content.id && !isFavorited && (
           <Action
-           title="Add to favorites"
-           icon={Icon.Star}
-           onAction={async () => {
-            await showToast(Toast.Style.Animated, "Loading")
-            favorite(true)
-           }}
-           shortcut={{ modifiers: ["cmd"], key: "f" }}
-          />)}
+            title="Add to favorites"
+            icon={Icon.Star}
+            onAction={async () => {
+              await showToast(Toast.Style.Animated, "Loading");
+              favorite(true);
+            }}
+            shortcut={{ modifiers: ["cmd"], key: "f" }}
+          />
+        )}
         {/* UNFAVORITE ARTICLE */}
         {props.item.content.id && isFavorited && (
-          <Action 
+          <Action
             title="Remove from favorites"
             icon={Icon.StarDisabled}
             onAction={async () => {
-              await showToast(Toast.Style.Animated, "Loading")
-              favorite(false)
+              await showToast(Toast.Style.Animated, "Loading");
+              favorite(false);
             }}
             shortcut={{ modifiers: ["cmd"], key: "f" }}
           />
