@@ -35,6 +35,17 @@ export default function Command() {
     fetchQueue();
   }, []);
 
+  function getArticleThumbnail (item: any) {
+    if(item.content.photo_thumbnail_url) {
+      return item.content.photo_thumbnail_url
+    } else if(item.content.publisher.domain_photo) {
+      return item.content.publisher.domain_photo
+    } else {
+      return ""
+    }
+
+  }
+
   return (
     <>
       <List isLoading={loading}>
@@ -42,7 +53,7 @@ export default function Command() {
           <List.Item
             key={item.id}
             icon={{
-              source: item.content.photo_thumbnail_url ? item.content.photo_thumbnail_url : "",
+              source: getArticleThumbnail(item),
               mask: Image.Mask.Circle,
             }}
             title={item.content.title}

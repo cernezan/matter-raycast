@@ -1,8 +1,27 @@
-import { ActionPanel, Action, Icon } from "@raycast/api";
+import { ActionPanel, Action, Icon, Toast, showToast } from "@raycast/api";
+import { useState } from "react";
 import { setFavorite } from "./matterApi";
 
 
 export function Actions(props: any) {
+
+  const[isFavorited, setIsFavorited] = useState<boolean>(props.item.content.library.is_favorited)
+
+  async function favorite(isFavorited: boolean) {
+    try {
+      let res: any = await setFavorite(props.item.content.id, true)
+      setIsFavorited(isFavorited)
+
+      if(res.id && isFavorited) {
+        showToast(Toast.Style.Success, "Success", "Article favorited")
+      } else {
+        showToast(Toast.Style.Success, "Success", "Artice removed from favorites")
+      }
+    } catch (error) {
+      showToast(Toast.Style.Failure, "Error", "Something went wrong")
+    }
+  }
+
   return (
     <ActionPanel title={props.item.content.title}>
       <ActionPanel.Section>
@@ -17,15 +36,28 @@ export function Actions(props: any) {
           />
         )}
         {/* FAVORITE ARTICLE */}
-        {props.item.content.id && !props.item.content.library.is_favorited && (
+        {props.item.content.id && !isFavorited && (
           <Action
            title="Add to favorites"
-           onAction={() => {
-            setFavorite(props.item.content.id, true)
+           icon={Icon.Star}
+           onAction={async () => {
+            await showToast(Toast.Style.Animated, "Loading")
+            favorite(true)
            }}
            shortcut={{ modifiers: ["cmd"], key: "f" }}
-           icon={Icon.Star}
           />)}
+        {/* UNFAVORITE ARTICLE */}
+        {props.item.content.id && isFavorited && (
+          <Action 
+            title="Remove from favorites"
+            icon={Icon.StarDisabled}
+            onAction={async () => {
+              await showToast(Toast.Style.Animated, "Loading")
+              favorite(false)
+            }}
+            shortcut={{ modifiers: ["cmd"], key: "f" }}
+          />
+        )}
       </ActionPanel.Section>
     </ActionPanel>
   );
