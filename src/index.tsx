@@ -1,7 +1,8 @@
-import { List, showToast, Toast, popToRoot, Image } from "@raycast/api";
+import { List, showToast, Toast, Detail, ActionPanel, Action, Image, openExtensionPreferences, showHUD } from "@raycast/api";
 import { useEffect, useState } from "react";
 import { Actions } from "./Actions";
 import { getQueue } from "./matterApi";
+import TokenErrorHandle from "./TokenErrorHandle";
 
 interface State {
   items?: any;
@@ -9,6 +10,7 @@ interface State {
 }
 
 export default function Command() {
+  const [isTokenValid, setIsTokenValid] = useState<boolean>(false);
   const [state, setState] = useState<State>({});
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -19,9 +21,9 @@ export default function Command() {
         const items: any = await getQueue();
         if (items.code == "token_not_valid") {
           showToast(Toast.Style.Failure, "Token not valid", "Please check your token in preferences");
-          popToRoot();
-          return;
+          return
         }
+        setIsTokenValid(true);
         setState({ items });
         setLoading(false);
       } catch (error) {
@@ -47,24 +49,30 @@ export default function Command() {
 
   return (
     <>
-      <List isLoading={loading}>
-        {state.items?.feed.map((item: any) => (
-          <List.Item
-            key={item.id}
-            icon={{
-              source: getArticleThumbnail(item),
-              mask: Image.Mask.Circle,
-            }}
-            title={item.content.title}
-            actions={<Actions item={item} />}
-            accessories={[
-              {
-                text: item.content.article?.word_count ? item.content.article?.word_count.toString() + " words" : "",
-              },
-            ]}
-          />
-        ))}
-      </List>
+      {isTokenValid ? (
+        <List isLoading={loading}>
+          {state.items?.feed.map((item: any) => (
+            <List.Item
+              key={item.id}
+              icon={{
+                source: getArticleThumbnail(item),
+                mask: Image.Mask.Circle,
+              }}
+              title={item.content.title}
+              actions={<Actions item={item} />}
+              accessories={[
+                {
+                  text: item.content.article?.word_count ? item.content.article?.word_count.toString() + " words" : "",
+                },
+              ]}
+            />
+          ))}
+        </List>
+      ) : (
+        <TokenErrorHandle></TokenErrorHandle>
+      )
+      }
+
     </>
   );
 }

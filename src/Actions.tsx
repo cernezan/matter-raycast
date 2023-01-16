@@ -24,8 +24,8 @@ export function Actions(props: any) {
   return (
     <ActionPanel title={props.item.content.title}>
       <ActionPanel.Section>
-        {/* OPEN IN BROWSER */}
-        {props.item.content.id && <Action.OpenInBrowser url={entryURL + props.item.content.id} />}
+        {/* OPEN IN MATTER */}
+        {props.item.content.id && <Action.OpenInBrowser url={entryURL + props.item.content.id} title="Open in Matter" />}
         {/* View Original */}
         {props.item.content.url && <Action.OpenInBrowser url={props.item.content.url} title="View Original" />}
         {/* COPY LINK */}

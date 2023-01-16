@@ -1,5 +1,9 @@
 # Matter Changelog
 
+## [⭐️ NAME] - DATE
+
+- now you can open articles within Matter Web for a better reading experience - thanks to [Josh Knowles](https://github.com/joshknowles)
+
 ## [⭐️ Favorites] - 2023-01-08
 
 - now you can favorite articles (and remove them from favorites)
