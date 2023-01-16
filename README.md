@@ -10,7 +10,7 @@ View your saved for later articles from Matter inside [Raycast](https://www.rayc
 ## Get your Matter token
 This token is needed for the API calls to the Matter service to show your saved articles. Since Matter doesn't officially provide an API token in the account settings we have to dig into their requests to find it. 
 
-1. Visit [Matter Webpage](web.getmatter.com) and login. 
+1. Visit [Matter Webpage](https://web.getmatter.com) and login. 
 2. Right-click and select 'Inspect'.
 3. Switch to the Network tab and make sure the record network activity is on.
 4. Hard refresh the page using CMD + Shift + R and select the first new request queue.
