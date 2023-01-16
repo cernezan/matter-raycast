@@ -4,6 +4,7 @@ import { setFavorite } from "./matterApi";
 
 export function Actions(props: any) {
   const [isFavorited, setIsFavorited] = useState<boolean>(props.item.content.library.is_favorited);
+  const entryURL = "https://web.getmatter.com/entry/";
 
   async function favorite(isFavorited: boolean) {
     try {
@@ -24,7 +25,9 @@ export function Actions(props: any) {
     <ActionPanel title={props.item.content.title}>
       <ActionPanel.Section>
         {/* OPEN IN BROWSER */}
-        {props.item.content.url && <Action.OpenInBrowser url={props.item.content.url} />}
+        {props.item.content.id && <Action.OpenInBrowser url={entryURL + props.item.content.id} />}
+        {/* View Original */}
+        {props.item.content.url && <Action.OpenInBrowser url={props.item.content.url} title="View Original" />}
         {/* COPY LINK */}
         {props.item.content.url && (
           <Action.CopyToClipboard
