@@ -3,12 +3,12 @@ View your saved for later articles from Matter inside [Raycast](https://www.rayc
 
 <a href="https://www.raycast.com/zan/matter"><img src="https://www.raycast.com/zan/matter/install_button@2x.png" height="64" alt="" style="height: 64px;"></a>
 
-![Matter extension for Raycast](https://user-images.githubusercontent.com/57217296/209464852-a681e81b-8b41-4fbb-a8fe-84eb19617a28.png)
-
 ## Features
 - 📰 view your saved for later articles
 - 🔢 word count displayed
 - ⭐️ favorite articles straight from the extension
+
+![Matter extension for Raycast](https://user-images.githubusercontent.com/57217296/209464852-a681e81b-8b41-4fbb-a8fe-84eb19617a28.png)
 
 ## Get your Matter token
 This token is needed for the API calls to the Matter service to show your saved articles. Since Matter doesn't officially provide an API token in the account settings we have to dig into their requests to find it. 
