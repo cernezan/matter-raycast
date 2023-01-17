@@ -19,6 +19,7 @@ export default function Command() {
       setLoading(true);
       try {
         const items: any = await getQueue();
+        console.log(items, "ITEMS")
         if (items.code == "token_not_valid") {
           showToast(Toast.Style.Failure, "Token not valid", "Please check your token in preferences");
           return
@@ -49,7 +50,7 @@ export default function Command() {
 
   return (
     <>
-      {isTokenValid ? (
+      {isTokenValid || loading ? (
         <List isLoading={loading}>
           {state.items?.feed.map((item: any) => (
             <List.Item
@@ -68,11 +69,8 @@ export default function Command() {
             />
           ))}
         </List>
-      ) : (
-        <TokenErrorHandle></TokenErrorHandle>
-      )
+      ) : (<TokenErrorHandle></TokenErrorHandle>)
       }
-
     </>
   );
 }
