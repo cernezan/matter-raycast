@@ -19,9 +19,9 @@ export default function Command() {
       setLoading(true);
       try {
         const items: any = await getQueue();
-        console.log(items, "ITEMS")
         if (items.code == "token_not_valid") {
           showToast(Toast.Style.Failure, "Token not valid", "Please check your token in preferences");
+          setLoading(false)
           return
         }
         setIsTokenValid(true);
