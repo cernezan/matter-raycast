@@ -10,7 +10,6 @@ export function Actions(props: any) {
     try {
       const res: any = await setFavorite(props.item.content.id, true);
       setIsFavorited(isFavorited);
-
       if (res.id && isFavorited) {
         showToast(Toast.Style.Success, "Success", "Article favorited");
       } else {
@@ -25,7 +24,7 @@ export function Actions(props: any) {
     <ActionPanel title={props.item.content.title}>
       <ActionPanel.Section>
         {/* OPEN IN MATTER */}
-        {props.item.content.article && <Action.OpenInBrowser url={entryURL + props.item.content.id} title="Open in Matter" />}
+        {props.item.content.article && props.item.content.id && <Action.OpenInBrowser url={entryURL + props.item.content.id} title="Open in Matter" />}
         {/* View Original */}
         {props.item.content.url && <Action.OpenInBrowser url={props.item.content.url} title="View Original" />}
         {/* COPY LINK */}
