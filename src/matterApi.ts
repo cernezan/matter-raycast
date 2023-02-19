@@ -17,7 +17,7 @@ async function getQueue() {
     const response = await fetch(url, options);
     return await response.json();
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
@@ -42,7 +42,7 @@ async function setFavorite(contentId: string, isFavorited: boolean) {
     const response = await fetch(url, options);
     return await response.json();
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 

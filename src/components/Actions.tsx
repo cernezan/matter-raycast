@@ -1,6 +1,6 @@
 import { ActionPanel, Action, Icon, Toast, showToast } from "@raycast/api";
 import { useState } from "react";
-import { setFavorite } from "./matterApi";
+import { setFavorite } from "../matterApi";
 
 export function Actions(props: any) {
   const [isFavorited, setIsFavorited] = useState<boolean>(props.item.content.library.is_favorited);
