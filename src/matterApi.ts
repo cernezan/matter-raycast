@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 import { getPreferenceValues } from "@raycast/api";
-import { Preferences } from "./types";
+import { Items, Preferences } from "./types";
 
 async function getQueue() {
   const url = "https://web.getmatter.com/api/library_items/queue_feed?page=1";
@@ -15,7 +15,7 @@ async function getQueue() {
 
   try {
     const response = await fetch(url, options);
-    return await response.json();
+    return await response.json() as Items;
   } catch (error) {
     console.error(error);
   }

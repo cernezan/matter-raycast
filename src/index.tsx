@@ -4,6 +4,7 @@ import { Actions } from "./components/Actions";
 import { FavoritesDropdown } from "./components/FavoritesDropdown";
 import { getQueue, getFavorites } from "./matterApi";
 import TokenErrorHandle from "./components/TokenErrorHandle";
+import { Item, Items } from "./types";
 
 interface State {
   items?: any;
@@ -24,10 +25,10 @@ export default function Command() {
   async function fetchQueue() {
     setLoading(true);
     try {
-      let items: any = await getQueue();
+      let items: Items = await getQueue() as Items;
       // If filter is set to favorites, get favorites instead
       if (filter == 2) {
-        items = await getFavorites();
+        items = await getFavorites() as Items;
       }
       if (items.code == "token_not_valid") {
         showToast(Toast.Style.Failure, "Token not valid", "Please check your token in preferences");
@@ -45,7 +46,7 @@ export default function Command() {
     }
   }
 
-  function getArticleThumbnail(item: any) {
+  function getArticleThumbnail(item: Item) {
     if (item.content.photo_thumbnail_url) {
       return item.content.photo_thumbnail_url;
     } else if (item.content.publisher.domain_photo) {
