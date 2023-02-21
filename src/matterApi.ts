@@ -21,6 +21,25 @@ async function getQueue() {
   }
 }
 
+async function getFavorites() {
+  const url = "https://web.getmatter.com/api/library_items/favorites_feed?page=1";
+  const token = getPreferenceValues<Preferences>().matterToken;
+  const options = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  try {
+    const response = await fetch(url, options);
+    return await response.json();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 async function setFavorite(contentId: string, isFavorited: boolean) {
   const url = "https://web.getmatter.com/api/library_entries";
   const token = getPreferenceValues<Preferences>().matterToken;
@@ -46,4 +65,4 @@ async function setFavorite(contentId: string, isFavorited: boolean) {
   }
 }
 
-export { getQueue, setFavorite };
+export { getQueue, getFavorites, setFavorite };

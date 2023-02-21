@@ -2,7 +2,7 @@ import { List, showToast, Toast, Detail, ActionPanel, Action, Image, openExtensi
 import { useEffect, useState } from "react";
 import { Actions } from "./components/Actions";
 import { FavoritesDropdown } from "./components/FavoritesDropdown";
-import { getQueue } from "./matterApi";
+import { getQueue, getFavorites } from "./matterApi";
 import TokenErrorHandle from "./components/TokenErrorHandle";
 
 interface State {
@@ -13,32 +13,37 @@ interface State {
 export default function Command() {
   const [isTokenValid, setIsTokenValid] = useState<boolean>(false);
   const [state, setState] = useState<State>({});
-  const [filter, setFilter] = useState<any>(2);
+  // 1 = queue, 2 = favorites
+  const [filter, setFilter] = useState<any>(1);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    async function fetchQueue() {
-      setLoading(true);
-      try {
-        let items: any = await getQueue();
-        if (items.code == "token_not_valid") {
-          showToast(Toast.Style.Failure, "Token not valid", "Please check your token in preferences");
-          setLoading(false)
-          return
-        }
-        setIsTokenValid(true);
-        setState({ items });
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-        setState({
-          error: error instanceof Error ? error : new Error("Something went wrong"),
-        });
-      }
-    }
-
     fetchQueue();
-  }, []);
+  }, [filter]);
+
+  async function fetchQueue() {
+    setLoading(true);
+    try {
+      let items: any = await getQueue();
+      // If filter is set to favorites, get favorites instead
+      if (filter == 2) {
+        items = await getFavorites();
+      }
+      if (items.code == "token_not_valid") {
+        showToast(Toast.Style.Failure, "Token not valid", "Please check your token in preferences");
+        setLoading(false)
+        return
+      }
+      setIsTokenValid(true);
+      setState({ items });
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setState({
+        error: error instanceof Error ? error : new Error("Something went wrong with fetching the articles"),
+      });
+    }
+  }
 
   function getArticleThumbnail(item: any) {
     if (item.content.photo_thumbnail_url) {
@@ -51,19 +56,7 @@ export default function Command() {
   }
 
   function filterSelection(type: any) {
-    filteredData(type)
-  }
-
-
-  function filteredData(filter: any) {
-    if (state.items?.feed) {
-      state.items.feed = state.items?.feed.filter(function (item: any) {
-        return item.content.library.is_favorited == true;
-      })
-    }
-
-    setState(state)
-    console.log(state.items?.feed.length, "L")
+    setFilter(type)
   }
 
   return (
