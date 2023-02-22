@@ -1,4 +1,4 @@
-import { List, showToast, Toast, Detail, ActionPanel, Action, Image, openExtensionPreferences, showHUD } from "@raycast/api";
+import { List, showToast, Toast, Detail, ActionPanel, Action, Image, clearSearchBar, openExtensionPreferences, showHUD } from "@raycast/api";
 import { useEffect, useState } from "react";
 import { Actions } from "./components/Actions";
 import { FavoritesDropdown } from "./components/FavoritesDropdown";
