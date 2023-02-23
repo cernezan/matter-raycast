@@ -25,9 +25,11 @@ export default function Command() {
   async function fetchQueue() {
     setLoading(true);
     try {
-      let items: Items = await getQueue() as Items;
-      // If filter is set to favorites, get favorites instead
-      if (filter == 2) {
+      let items: Items;
+      if (filter == 1) {
+        items = await getQueue() as Items;
+      } else {
+        // If filter is set to favorites, get favorites instead
         items = await getFavorites() as Items;
       }
       if (items.code == "token_not_valid") {
@@ -67,7 +69,7 @@ export default function Command() {
           isLoading={loading}
           searchBarAccessory={<FavoritesDropdown filterSelection={filterSelection} />}
         >
-          {state.items?.feed.map((item: any) => (
+          {state ? state.items?.feed.map((item: any) => (
             <List.Item
               key={item.id}
               icon={{
@@ -82,7 +84,7 @@ export default function Command() {
                 },
               ]}
             />
-          ))}
+          )) : ''}
         </List>
       ) : (<TokenErrorHandle></TokenErrorHandle>)
       }

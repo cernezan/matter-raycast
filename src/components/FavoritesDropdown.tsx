@@ -9,8 +9,8 @@ export function FavoritesDropdown(props: any) {
 
     return (
         <List.Dropdown
-            tooltip="Test"
-            storeValue={true}
+            tooltip="Filter articles"
+            storeValue={false}
             onChange={(newValue) => {
                 props.filterSelection(newValue)
             }}
